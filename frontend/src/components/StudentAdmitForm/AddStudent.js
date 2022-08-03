@@ -1,6 +1,10 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import StateAddress from "./Address";
+import StateAddress from "./StateAddress";
+import DistrictAddress from "./DistrictAddress";
+import PincodeAddress from "./PincodeAddress";
+import CityAddress from "./CityAddress";
+
 
 const AddStudent = (props) => {
   
@@ -21,6 +25,8 @@ const AddStudent = (props) => {
     state: '',
     pinCode: ''
   });
+  const [cityOptions, setCityOptions] = useState([]);
+
 
   const onChangePersonalDetails = (e) => {
     setPersonalDetails({
@@ -43,6 +49,7 @@ const AddStudent = (props) => {
       [e.target.name]: e.target.value,
     });
   };
+
   
 
   const onSubmit = (e) => {
@@ -64,7 +71,6 @@ const AddStudent = (props) => {
     // window.location = "/";
   }
 
-  
   
   return (
     <div>
@@ -115,47 +121,66 @@ const AddStudent = (props) => {
             value={address.street}
             onChange={onChangeAddress}
           />
+        </div>
+        <div>
+          {(() => {
+            if (address.pinCode.length === 6) {
+              return (
+                <CityAddress
+                  cityOptions={cityOptions}
+                  address={address}
+                  setAddress={setAddress}
+                />
+              );
+            }
+            if (address.city === "" || typeof address.city === "undefined") {
+              return (
+                <input
+                  style={{ width: "50%" }}
+                  type="text"
+                  required
+                  placeholder="City"
+                  name="city"
+                  value={address.city}
+                  onChange={onChangeAddress}
+                />
+              );
+            }
+            
+          })()}
 
-          <input
-            style={{ width: "50%" }}
-            type="text"
-            required
-            placeholder="City"
-            name="city"
-            value={address.city}
-            onChange={onChangeAddress}
-          />
+          {(() => {
+            if (address.state === "" || typeof address.state === "undefined") {
+              return (
+                <input
+                  style={{ width: "50%" }}
+                  type="text"
+                  required
+                  placeholder="District"
+                  name="district"
+                  value={address.district}
+                  onChange={onChangeAddress}
+                />
+              );
+            }
+            if (address.state.length > 0) {
+              return (
+                <DistrictAddress address={address} setAddress={setAddress} />
+              );
+            }
+          })()}
+          </div>
+        <div>
 
-          <input
-            style={{ width: "50%" }}
-            type="text"
-            required
-            placeholder="District"
-            name="district"
-            value={address.district}
-            onChange={onChangeAddress}
-          />
-
-          {/* <input
-            style={{ width: "50%" }}
-            type="text"
-            required
-            placeholder="State"
-            name="state"
-            value={address.state}
-            onChange={onChangeAddress}
-          /> */}
           <StateAddress address={address} setAddress={setAddress} />
 
-          <input
-            style={{ width: "50%" }}
-            type="text"
-            required
-            placeholder="Pin Code"
-            name="pinCode"
-            value={address.pinCode}
-            onChange={onChangeAddress}
+          <PincodeAddress
+            address={address}
+            setAddress={setAddress}
+            cityOptions={cityOptions}
+            setCityOptions={setCityOptions}
           />
+          
         </div>
         <br />
         <h5>Course : {JSON.stringify(course)}</h5>

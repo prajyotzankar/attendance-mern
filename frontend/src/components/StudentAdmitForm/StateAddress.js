@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Address = (props) => {
+const StateAddress = (props) => {
   const [stateOptions, setStateOptions] = useState([]);
   // const [chosenState, setChosenState] = useState("");
 
@@ -34,18 +34,16 @@ const Address = (props) => {
 
   return (
     <div>
-      <h3>Enter Address</h3>
       <form className="row g-3">
         <div className="col-md-3">
           <label className="form-label">
-            State: {JSON.stringify(props.address)}
           </label>
           <select
             className="form-select"
             id="chosenState"
-            name="chosenState"
+            name="state"
             onChange={onChangeStateOption}
-            value={props.address.stateName}
+            value={props.address.state}
           >
             <option value="">--Select State--</option>
 
@@ -69,15 +67,9 @@ const Address = (props) => {
             })()}
           </select>
         </div>
-
-        <div className="col-md-3">
-          <button type="button" className="btn btn-primary mt-4">
-            Submit
-          </button>
-        </div>
       </form>
     </div>
   );
 };
 
-export default Address;
+export default StateAddress;

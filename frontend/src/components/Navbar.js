@@ -20,11 +20,6 @@ export default class Navbar extends Component {
                 Admit Student
               </Link>
             </li>
-            <li className="navbar-item">
-              <Link to="/address/statesOfIndia" className="nav-link">
-                States of India
-              </Link>
-            </li>
           </ul>
         </div>
       </nav>

@@ -4,6 +4,7 @@ const City_district_pincode_state = require("../models/city_district_pincode_sta
 
 router.route("/statesOfIndia").get((req, res) => {
   States_of_india.find({}, { stateName: 1, _id: 0 })
+    .sort("stateName")
     .then((statesOfIndia) => res.json(statesOfIndia))
     .catch((error) => res.status(400).json("Error: " + error));
 });
