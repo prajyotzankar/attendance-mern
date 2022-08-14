@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import DisplayStudentInfo from './DisplayStudentInfo';
 
 function withParams(Component) {
-  console.log("withParams");
   return (props) => <Component {...props} params={useParams()} />;
 }
 
@@ -15,10 +14,9 @@ class ListStudentByPrn extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
     let { prn } = this.props.params;
     axios
-      .get("http://localhost:5000/student/" + prn)
+      .get("http://localhost:5000/student/studentByPRN/" + prn)
       .then((response) => {
         this.setState({ students: response.data });
       })
@@ -32,7 +30,6 @@ class ListStudentByPrn extends Component {
   }
 
   StudentList() {
-    console.log("StudentList");
     return <DisplayStudentInfo student={this.state.students} key={this.state.students._id} />;
   }
 
@@ -40,7 +37,6 @@ class ListStudentByPrn extends Component {
     return (
       <div>
         <h3>Student Detail</h3>
-        {console.log('this.StudentList')}
         {this.StudentList()}
       </div>
     );

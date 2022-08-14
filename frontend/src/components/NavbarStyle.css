@@ -1,0 +1,193 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+:root {
+  font-size: 16px;
+  font-family: "Open Sans";
+  --text-primary: #b6b6b6;
+  --text-secondary: #ececec;
+  --bg-primary: #191724;
+  --bg-secondary: #212529;
+  --transition-speed: 600ms;
+}
+
+.nav {
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 40px;
+  /* margin-left: 325; */
+
+  position: absolute;
+  height: 80px;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+
+  background: #161a1f;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  /* Logo */
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 10px;
+  gap: 10px;
+
+  width: 252px;
+  height: 56px;
+
+  /* Inside auto layout */
+
+  flex: 1;
+  order: 0;
+  flex-grow: 0;
+}
+
+.logo-text {
+  /* Attendance App */
+
+  width: 232px;
+  height: 36px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 36px;
+  font-family: "Open Sans";
+
+  color: #ffffff;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.logoutButton {
+  /* Logout Button */
+
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 10px 20px;
+  gap: 10px;
+  width: 134px;
+  height: 51px;
+  background: rgba(18, 22, 26, 0.5);
+  border-radius: 5px;
+
+  /* Inside auto layout */
+
+  flex: 1;
+  order: 2;
+  flex-grow: 0;
+}
+
+.logoutButton:hover {
+  box-shadow: 5px 5px 5px var(--bg-secondary);
+  text-decoration: none;
+}
+
+.logoutButton:active {
+  transition: all 0.3s ease-out;
+  box-shadow: 5px 5px 4px var(--bg-secondary) inset;
+}
+
+.logoutButton-text {
+  /* Log out */
+
+  width: 94px;
+  height: 31px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 31px;
+  font-family: "Open Sans";
+
+  color: #ffffff;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0px 0px;
+  gap: 3rem;
+  align-items: center;
+  margin: 0 auto;
+  width: auto;
+  height: 39px;
+  flex: 2;
+  order: 1;
+  flex-grow: 0;
+}
+
+.menu-item,
+.menu-item:hover,
+.menu-item:focus,
+.menu-item:active {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 29px;
+  color: #ffffff;
+  padding: 10px 20px;
+  gap: 10px;
+  width: auto;
+  height: 51px;
+  font-family: "Open Sans";
+
+  background: rgba(18, 22, 26, 0.5);
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  box-shadow: 5px 5px 5px var(--bg-secondary);
+  text-decoration: none;
+}
+
+.menu-item:active {
+  transition: all 0.3s ease-out;
+  box-shadow: 5px 5px 4px var(--bg-secondary) inset;
+}
+
+.student {
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.admitStudent {
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+

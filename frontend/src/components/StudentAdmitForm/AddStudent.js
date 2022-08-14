@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import StateAddress from "./StateAddress";
-import DistrictAddress from "./DistrictAddress";
-import PincodeAddress from "./PincodeAddress";
-import CityAddress from "./CityAddress";
-
+import StateAddress from "./Address/StateAddress";
+import DistrictAddress from "./Address/DistrictAddress";
+import PincodeAddress from "./Address/PincodeAddress";
+import CityAddress from "./Address/CityAddress";
+import Schools from "./Course/School";
+import Courses from "./Course/Courses";
+import Years from "./Course/Years";
+import "./AddStudentFormStyle.css";
 
 const AddStudent = (props) => {
-  
   const [personalDetails, setPersonalDetails] = useState({
     name: "",
     prn: "",
@@ -16,17 +18,16 @@ const AddStudent = (props) => {
   const [course, setCourse] = useState({
     school: "",
     courseName: "",
-    year : ""
+    year: "",
   });
   const [address, setAddress] = useState({
-    street: '',
-    city: '',
-    district: '',
-    state: '',
-    pinCode: ''
+    street: "",
+    city: "",
+    district: "",
+    state: "",
+    pinCode: "",
   });
   const [cityOptions, setCityOptions] = useState([]);
-
 
   const onChangePersonalDetails = (e) => {
     setPersonalDetails({
@@ -34,7 +35,6 @@ const AddStudent = (props) => {
       [e.target.name]: e.target.value,
     });
   };
-
 
   const onChangeCourse = (e) => {
     setCourse({
@@ -49,8 +49,6 @@ const AddStudent = (props) => {
       [e.target.name]: e.target.value,
     });
   };
-
-  
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -67,159 +65,148 @@ const AddStudent = (props) => {
     axios
       .post("http://localhost:5000/student/admit", student)
       .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        setError(error.response.data);
+      });
     // window.location = "/";
-  }
+  };
 
-  
+  const [error, setError] = useState(null);
+  const errorDiv = error ? (
+    <div className="error">
+      <i className="material-icons error-icon">error_outline</i>
+      {error}
+    </div>
+  ) : (
+    ""
+  );
+
   return (
-    <div>
-      <h3>Enter Student Info</h3>
-      <form onSubmit={onSubmit}>
-        <div>
-          <label htmlFor="name">Name :</label>
-          <input
-            type="text"
-            style={{ width: "100%" }}
-            required
-            name="name"
-            id="name"
-            value={personalDetails.name}
-            onChange={onChangePersonalDetails}
-          />
-        </div>
-        <div>
-          <label>PRN : </label>
-          <input
-            type="text"
-            style={{ width: "40%" }}
-            required
-            name="prn"
-            value={personalDetails.prn}
-            onChange={onChangePersonalDetails}
-          />
-
-          <label>Date : </label>
-          <input
-            style={{ width: "40%" }}
-            type="date"
-            required
-            name="birthDate"
-            value={personalDetails.birthDate}
-            onChange={onChangePersonalDetails}
-          />
-        </div>
-        <br />
-        <h5>Address : {JSON.stringify(address)}</h5>
-        <div>
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            required
-            placeholder="Street"
-            name="street"
-            value={address.street}
-            onChange={onChangeAddress}
-          />
-        </div>
-        <div>
-          {(() => {
-            if (address.pinCode.length === 6) {
-              return (
-                <CityAddress
-                  cityOptions={cityOptions}
-                  address={address}
-                  setAddress={setAddress}
-                />
-              );
-            }
-            if (address.city === "" || typeof address.city === "undefined") {
-              return (
-                <input
-                  style={{ width: "50%" }}
-                  type="text"
-                  required
-                  placeholder="City"
-                  name="city"
-                  value={address.city}
-                  onChange={onChangeAddress}
-                />
-              );
-            }
-            
-          })()}
-
-          {(() => {
-            if (address.state === "" || typeof address.state === "undefined") {
-              return (
-                <input
-                  style={{ width: "50%" }}
-                  type="text"
-                  required
-                  placeholder="District"
-                  name="district"
-                  value={address.district}
-                  onChange={onChangeAddress}
-                />
-              );
-            }
-            if (address.state.length > 0) {
-              return (
-                <DistrictAddress address={address} setAddress={setAddress} />
-              );
-            }
-          })()}
+    <div class="main_container">
+      <div className="form-area">
+        <h3>Enter Student Info</h3>
+        {errorDiv}
+        <form onSubmit={onSubmit}>
+          <div className="flex_container">
+            <div className="input-container">
+              <label className="label filled" htmlFor="name">
+                Student Name
+              </label>
+              <input
+                type="text"
+                className="text-input"
+                autoComplete="off"
+                placeholder=" Enter Student Name"
+                required
+                name="name"
+                id="name"
+                value={personalDetails.name}
+                onChange={onChangePersonalDetails}
+              />
+            </div>
+            <div className="input-container">
+              <label className="label filled"> PRN </label>
+              <input
+                type="text"
+                className="text-input"
+                autoComplete="off"
+                placeholder=" Enter PRN"
+                required
+                name="prn"
+                value={personalDetails.prn}
+                onChange={onChangePersonalDetails}
+              />
+            </div>
           </div>
-        <div>
 
-          <StateAddress address={address} setAddress={setAddress} />
+          <div className="flex_container">
+            <div className="input-container">
+              <label className="label filled"> Blood Group </label>
+              <input
+                type="text"
+                className="text-input"
+                autoComplete="off"
+                placeholder=" Enter Blood Group"
+                required
+                name="prn"
+                value={personalDetails.prn}
+                onChange={onChangePersonalDetails}
+              />
+            </div>
+            <div className="input-container">
+              <label className="label filled"> Birth Date </label>
+              <input
+                type="date"
+                required
+                className="text-input"
+                autoComplete="off"
+                name="birthDate"
+                value={personalDetails.birthDate}
+                onChange={onChangePersonalDetails}
+              />
+            </div>
+          </div>
 
-          <PincodeAddress
-            address={address}
-            setAddress={setAddress}
-            cityOptions={cityOptions}
-            setCityOptions={setCityOptions}
-          />
           
-        </div>
-        <br />
-        <h5>Course : {JSON.stringify(course)}</h5>
-        <div>
-          <input
-            style={{ width: "100%" }}
-            type="text"
-            required
-            placeholder="Course Name"
-            name="courseName"
-            value={course.courseName}
-            onChange={onChangeCourse}
-          />
-          <input
-            style={{ width: "50%" }}
-            type="text"
-            required
-            placeholder="School"
-            name="school"
-            value={course.school}
-            onChange={onChangeCourse}
-          />
-          <input
-            style={{ width: "50%" }}
-            type="text"
-            required
-            placeholder="Year"
-            name="year"
-            value={course.year}
-            onChange={onChangeCourse}
-          />
-        </div>
-        <div>
-          <input type="submit" value="Submit Student Details" />
-        </div>
-      </form>
+          <h5>Address</h5>
+          <div className="flex_container input-container2">
+            <label className="label filled"> Street </label>
+            <input
+              type="text"
+              className="text-input"
+              autoComplete="off"
+              placeholder=" Street"
+              required
+              name="street"
+              value={address.street}
+              onChange={onChangeAddress}
+            />
+          </div>
+          <div className="flex_container">
+            <PincodeAddress
+              address={address}
+              onChangeAddress={onChangeAddress}
+              setAddress={setAddress}
+              cityOptions={cityOptions}
+              setCityOptions={setCityOptions}
+            />
+
+            <CityAddress
+              cityOptions={cityOptions}
+              address={address}
+              onChangeAddress={onChangeAddress}
+            />
+          </div>
+          <div className="flex_container">
+            <DistrictAddress
+              address={address}
+              onChangeAddress={onChangeAddress}
+            />
+            <StateAddress address={address} onChangeAddress={onChangeAddress} />
+          </div>
+
+          
+          <h5>Course </h5>
+
+          <div className="flex_container">
+            <Schools course={course} onChangeCourse={onChangeCourse} />
+            <Courses course={course} onChangeCourse={onChangeCourse} />
+          </div>
+          <div className="flex_container_2">
+            <Years course={course} onChangeCourse={onChangeCourse} />
+          </div>
+          <div className="flex_container" style={{ marginTop: "20px" }}>
+            <input
+              type="submit"
+              class="btn btn-dark btn-lg"
+              value="Submit Student Details"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
-}
-
+};
 
 export default AddStudent;

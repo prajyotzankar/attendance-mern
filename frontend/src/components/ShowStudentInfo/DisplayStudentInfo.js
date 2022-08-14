@@ -7,39 +7,39 @@ const DisplayStudentInfo = (props) => {
     const address = props.student.address[0];
   
     return (
-      <div class="student-profile py-4">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="card shadow-sm">
-                <div class="card-header bg-transparent text-center">
+      <div className="student-profile py-4">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-4">
+              <div className="card shadow-sm">
+                <div className="card-header bg-dark text-center">
                   <h3>{props.student.name}</h3>
                 </div>
-                <div class="card-body">
-                  <p class="mb-0">
-                    <strong class="pr-1">PRN : </strong>
+                <div className="card-body bg-dark">
+                  <p className="mb-0">
+                    <strong className="pr-1">PRN : </strong>
                     {props.student.prn}
                   </p>
-                  <p class="mb-0">
-                    <strong class="pr-1">D.O.B : </strong>
+                  <p className="mb-0">
+                    <strong className="pr-1">D.O.B : </strong>
                     {props.student.birthDate.substring(0, 10)}
                   </p>
-                  <p class="mb-0">
-                    <strong class="pr-1">School : </strong>
+                  <p className="mb-0">
+                    <strong className="pr-1">School : </strong>
                     {course.school}
                   </p>
                 </div>
               </div>
             </div>
-            <div class="col-lg-8">
-              <div class="card shadow-sm">
-                <div class="card-header bg-transparent border-0">
-                  <h3 class="mb-0">
-                    <i class="far fa-clone pr-1"></i>General Information
+            <div className="col-lg-8">
+              <div className="card shadow-sm">
+                <div className="card-header bg-dark border-0">
+                  <h3 className="mb-0">
+                    <i className="far fa-clone pr-1"></i>General Information
                   </h3>
                 </div>
-                <div class="card-body pt-0">
-                  <table class="table table-bordered">
+                <div className="card-body pt-0 bg-dark">
+                  <table className="table table-bordered">
                     <tr>
                       <th width="30%">Roll</th>
                       <td width="2%">:</td>

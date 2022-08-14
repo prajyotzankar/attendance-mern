@@ -1,0 +1,149 @@
+body {
+  display: flex;
+  place-items: center;
+  height: auto;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  background: #191724;
+  color: #fff;
+}
+
+.main_container{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.form-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 100px;
+  gap: 4px;
+  position: relative;
+  width: auto;
+  height: auto;
+  margin: auto;
+  background: rgba(21, 25, 29, 0.6);
+}
+
+.flex_container {
+  position: relative;
+  display: flex;
+  align-items: top;
+  flex-wrap: wrap;
+  justify-items: center;
+  justify-content: center;
+  align-content: top;
+  gap: 2em;
+  margin-bottom: 10px;
+}
+
+.flex_container > div {
+  margin: 10px;
+  flex-wrap: wrap;
+}
+
+.flex_container_2 {
+  display: flex;
+  justify-content: left;
+  position: relative;
+  display: flex;
+  align-items: top;
+  flex-wrap: wrap;
+  align-content: top;
+  gap: 2em;
+  margin-bottom: 10px;
+}
+
+.flex_container_2 > div {
+  margin: 10px;
+  flex-wrap: wrap;
+}
+
+.input-container {
+  width: 350px;
+  position: relative;
+}
+.input-container2 {
+  width: 750px;
+  position: relative;
+  margin: 10px;
+}
+
+.label {
+  position: absolute;
+  left: 10px;
+  top: 14px;
+  transition: all 0.2s;
+  padding: 0 2px;
+  z-index: 1;
+  color: #b3b3b3;
+}
+.text-input {
+  padding: 0.8rem;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #2f2c45;
+  background: #272530;
+  border-radius: 5px;
+  font-size: 18px;
+  outline: none;
+  transition: all 0.3s;
+  color: #fff;
+}
+
+.label::before {
+  content: "";
+  height: 5px;
+  background: #272530;
+  position: absolute;
+  left: 0px;
+  top: 10px;
+  width: 100%;
+  z-index: -1;
+}
+
+.text-input:focus {
+  border: 2px solid #7e4ccb;
+}
+
+.text-input:focus + .label,
+.filled {
+  top: -10px;
+  color: #7e4ccb;
+  font-size: 16px;
+}
+
+.text-input::placeholder {
+  font-size: 16px;
+  opacity: 0;
+  transition: all 0.3s;
+}
+.text-input:focus::placeholder {
+  opacity: 1;
+}
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-internal-autofill-selected,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: white !important;
+}
+
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+select:-internal-autofill-selected,
+select:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: white !important;
+  -webkit-text-option-color: white !important;
+  color: rgb(255, 255, 255);
+  /* -webkit-box-shadow: 0 0 0 1000px white inset;
+    box-shadow: inset 0 0 6px rgb(255, 255, 255); */
+}

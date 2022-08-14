@@ -11,14 +11,6 @@ router.route("/admit").post((req, res) => {
   const name = req.body.name;
   const prn = req.body.prn;
   const birthDate = Date.parse(req.body.birthDate);
-  // const school = req.body.school;
-  // const courseName = req.body.courseName;
-  // const year = req.body.year;
-  // const street = req.body.street;
-  // const city = req.body.city;
-  // const district = req.body.district;
-  // const state = req.body.state;
-  // const pinCode = req.body.pinCode;
 
   const course = req.body.course;
   const address = req.body.address;
@@ -28,23 +20,7 @@ router.route("/admit").post((req, res) => {
     prn: prn,
     birthDate: birthDate,
     course: course,
-    // [
-    //   {
-    //     school: school,
-    //     courseName: courseName,
-    //     year: year,
-    //   },
-    // ],
     address: address,
-    // [
-    //   {
-    //     street: street,
-    //     city: city,
-    //     district: district,
-    //     state: state,
-    //     pinCode: pinCode,
-    //   },
-    // ],
   });
 
   newStudent
@@ -53,10 +29,23 @@ router.route("/admit").post((req, res) => {
     .catch((error) => res.status(400).json("Error: " + error));
 });
 
-router.route("/:prn").get((req, res) => {
+router.route("/studentByPRN/:prn").get((req, res) => {
   Student.findOne({ prn: req.params.prn })
     .then((student) => res.json(student))
     .catch((error) => res.status(400).json("Error: " + error));
+});
+
+router.route("/filterByCourse/:SchoolName/:CourseName/:Year").get((req, res) => {
+  Student.find(
+    {
+      "course.school": req.params.SchoolName,
+      "course.courseName": req.params.CourseName,
+      "course.year": req.params.Year,
+    },
+    { prn: 1, name: 1, birthDate: 1, _id: 0 }
+  )
+    .then((response) => res.json(response))
+    .catch((error) => res.json(400).json("Error: " + error));
 });
 
 module.exports = router;

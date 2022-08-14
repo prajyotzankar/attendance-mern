@@ -22,6 +22,9 @@ app.use("/student", studentRouter);
 const addressRouter = require("./routes/address");
 app.use("/address", addressRouter);
 
+const schoolsCourses = require("./routes/schoolsCourses");
+app.use("/schoolsCourses", schoolsCourses);
+
 
 //function to connect to Atlas db
 const connectDB = (uri) => {
