@@ -45,7 +45,7 @@ router.route("/filterByCourse/:SchoolName/:CourseName/:Year").get((req, res) => 
     { prn: 1, name: 1, birthDate: 1, _id: 0 }
   )
     .then((response) => res.json(response))
-    .catch((error) => res.json(400).json("Error: " + error));
+    .catch((error) => res.status(400).json("Error: " + error));
 });
 
 module.exports = router;

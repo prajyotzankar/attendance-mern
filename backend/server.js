@@ -13,17 +13,18 @@ app.use(express.json());
 const uri = process.env.ATLAS_URI;
 
 //routes
-const homeRouter = require("./routes/home");
-app.use("/", homeRouter);
+// const homeRouter = require("./routes/home");
 
-const studentRouter = require("./routes/student");
-app.use("/student", studentRouter);
+// const studentRouter = require("./routes/student");
 
-const addressRouter = require("./routes/address");
-app.use("/address", addressRouter);
+// const addressRouter = require("./routes/address");
 
-const schoolsCourses = require("./routes/schoolsCourses");
-app.use("/schoolsCourses", schoolsCourses);
+// const schoolsCourses = require("./routes/schoolsCourses");
+app.use("/", require("./routes/home"));
+app.use("/student", require("./routes/student"));
+app.use("/address", require("./routes/address"));
+app.use("/schoolsCourses", require("./routes/schoolsCourses"));
+app.use("/authentication", require("./routes/user_auth"));
 
 
 //function to connect to Atlas db
