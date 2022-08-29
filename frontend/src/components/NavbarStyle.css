@@ -5,7 +5,7 @@
   font-family: "Open Sans";
   --text-primary: #b6b6b6;
   --text-secondary: #ececec;
-  --bg-primary: #191724;
+  --bg-primary: #14181c;
   --bg-secondary: #212529;
   --transition-speed: 600ms;
 }
@@ -189,5 +189,3 @@
   order: 1;
   flex-grow: 0;
 }
-
-
