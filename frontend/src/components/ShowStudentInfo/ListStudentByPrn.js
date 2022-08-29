@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import DisplayStudentInfo from './DisplayStudentInfo';
-
+  
+  
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }

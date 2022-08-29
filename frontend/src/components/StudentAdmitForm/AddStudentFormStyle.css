@@ -3,11 +3,11 @@ body {
   place-items: center;
   height: auto;
   font-family: "Poppins", Arial, Helvetica, sans-serif;
-  background: #191724;
+  background: #14181c;
   color: #fff;
 }
 
-.main_container{
+.main_container {
   display: flex;
   position: relative;
   flex-direction: column;
@@ -25,7 +25,7 @@ body {
   width: auto;
   height: auto;
   margin: auto;
-  background: rgba(21, 25, 29, 0.6);
+  background: #15191d;
 }
 
 .flex_container {

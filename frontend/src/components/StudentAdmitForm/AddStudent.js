@@ -83,7 +83,7 @@ const AddStudent = (props) => {
   );
 
   return (
-    <div class="main_container">
+    <div className="main_container">
       <div className="form-area">
         <h3>Enter Student Info</h3>
         {errorDiv}
@@ -148,7 +148,6 @@ const AddStudent = (props) => {
             </div>
           </div>
 
-          
           <h5>Address</h5>
           <div className="flex_container input-container2">
             <label className="label filled"> Street </label>
@@ -186,7 +185,6 @@ const AddStudent = (props) => {
             <StateAddress address={address} onChangeAddress={onChangeAddress} />
           </div>
 
-          
           <h5>Course </h5>
 
           <div className="flex_container">
@@ -199,7 +197,7 @@ const AddStudent = (props) => {
           <div className="flex_container" style={{ marginTop: "20px" }}>
             <input
               type="submit"
-              class="btn btn-dark btn-lg"
+              className="btn btn-dark btn-lg"
               value="Submit Student Details"
             />
           </div>

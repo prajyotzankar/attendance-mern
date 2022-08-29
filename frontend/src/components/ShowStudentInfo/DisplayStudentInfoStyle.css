@@ -1,8 +1,3 @@
-/* Container */
-#root .container {
-  text-align: center;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -22,18 +17,6 @@ body {
   flex-direction: column;
   justify-content: center;
   margin-top: 100px;
-}
-
-.form-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 40px;
-  gap: 4px;
-  position: relative;
-  width: auto;
-  height: auto;
-  margin: auto;
   background: #15191d;
 }
 
@@ -49,10 +32,23 @@ body {
   margin-bottom: 20px;
 }
 
-.table-area {
+.info_card {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* Th */
+.info_table {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.attendance_table {
+}
+
 .table tr th {
   color: #ecf0f1;
   text-align: center;
