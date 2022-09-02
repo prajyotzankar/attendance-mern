@@ -3,19 +3,39 @@ const User_auth = require("../models/user_auth");
 const sendEmail = require("../middleware/sendEmail");
 const crypto = require("crypto")
 
-router.route("/register").post((req, res) => {
-  const newUser = new User_auth({
-    userType: req.body.userType,
-    userID: req.body.userID,
-    collegeEmailID: req.body.collegeEmailID,
-    personalEmailID: req.body.personalEmailID,
-    password: req.body.password,
-  });
+router.route("/register").post(async (req, res) => {
+  // const newUser = new User_auth({
+  //   userType: req.body.userType,
+  //   userID: req.body.userID,
+  //   collegeEmailID: req.body.collegeEmailID,
+  //   personalEmailID: req.body.personalEmailID,
+  //   password: req.body.password,
+  // });
 
-  newUser
-    .save()
-    .then(SendToken(newUser, res))
-    .catch((error) => res.status(400).json("Error: " + error));
+  // newUser
+  //   .save()
+  //   .then(SendToken(newUser, res))
+  //   .catch((error) => { return res.status(400).json("Error: " + error) });
+  
+  try {
+    const newUser = new User_auth({
+      userType: req.body.userType,
+      userID: req.body.userID,
+      collegeEmailID: req.body.collegeEmailID,
+      personalEmailID: req.body.personalEmailID,
+      password: req.body.password,
+    });
+
+    await newUser.save();
+    return res.status(200).json(SendToken(newUser, res));
+
+  } catch (error) {
+    if (error.code === 11000)
+      return res.status(400).json("Error: duplicate key error");
+      
+    return res.status(400).json("Error: " + error);
+  }
+  
 });
 
 router.route("/login").post((req, res) => {
