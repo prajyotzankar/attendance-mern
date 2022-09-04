@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
 import "./RegistrationStyle.css";
 import "./PasswordValidationStyle.css";
 import RandomPasswordGenerator from "./RandomPasswordGenerator";
@@ -9,8 +8,8 @@ const PasswordValidation = (props) => {
   const [checkSpecialChar, setCheckSpecialChar] = useState(false);
   const [checkNumber, setCheckNumber] = useState(false);
   const [checkLength, setCheckLength] = useState(false);
-  // const [passwordStrength, setPasswordStrength] = useState(0);
   const [passwordStrengthLabel, setPasswordStrengthLabel] = useState(false);
+  const [passwordEntropy, setPasswordEntropy] = useState(0);
 
   const funcCheckLength = (password) => {
     setCheckLength(password.length >= 10);
@@ -22,13 +21,21 @@ const PasswordValidation = (props) => {
   };
 
   const funcCheckCase = (password) => {
-    const pattern = /([a-z].*[A-Z])|([A-Z].*[a-z])/;
+    const pattern = /((?=\S*?[A-Z])(?=\S*?[a-z]))/;
     setCheckCase(pattern.test(password));
   };
 
   const funcCheckSpecialChar = (password) => {
     const pattern = /[!@#$%^&*()_+<>?]+/;
     setCheckSpecialChar(pattern.test(password));
+  };
+
+  const calcEntropy = (passwordLength) => {
+    const charsetLength = 77;
+    var entropy = Math.round(
+      (passwordLength * Math.log(charsetLength)) / Math.LN2
+    );
+    setPasswordEntropy(entropy);
   };
 
   const passwordStrength = () => {
@@ -53,14 +60,13 @@ const PasswordValidation = (props) => {
         validity: false,
       });
     }
-  } 
+  };
 
   const onChangePassword = async (e) => {
     await props.setPassword({
       ...props.password,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value.replace(/[^0-9A-za-z!@#$%^&*()_+<>?]/g, ""),
     });
-    
   };
 
   const onChangeConfirmPassword = async (e) => {
@@ -68,7 +74,6 @@ const PasswordValidation = (props) => {
       ...props.password,
       [e.target.name]: e.target.value,
     });
-    
   };
 
   useEffect(() => {
@@ -77,15 +82,11 @@ const PasswordValidation = (props) => {
   }, [checkCase, checkSpecialChar, checkNumber, checkLength]);
 
   useEffect(() => {
-    // const passwordChecker = () => {
-      funcCheckNumber(props.password.password);
-      funcCheckLength(props.password.password);
-      funcCheckCase(props.password.password);
-      funcCheckSpecialChar(props.password.password);
-      // passwordStrength();
-      // changeValidity();
-    // };
-    // passwordChecker();
+    funcCheckNumber(props.password.password);
+    funcCheckLength(props.password.password);
+    funcCheckCase(props.password.password);
+    funcCheckSpecialChar(props.password.password);
+    calcEntropy(props.password.password.length);
   }, [props.password.password]);
 
   useEffect(() => {
@@ -109,14 +110,13 @@ const PasswordValidation = (props) => {
   }, [props.password.confirmPassword]);
 
   const generatePassword = async (e) => {
-
     const generatedPassword = RandomPasswordGenerator();
     await props.setPassword({
       ...props.password,
       confirmPassword: generatedPassword,
       password: generatedPassword,
     });
-    
+
     navigator.clipboard.writeText(generatedPassword);
 
     document.getElementById("custom-tooltip").style.display = "inline";
@@ -145,9 +145,9 @@ const PasswordValidation = (props) => {
         />
 
         <div className="validationBox">
-          <h6>Password Strength </h6>
-          <br />
-          <h5>{passwordStrengthLabel}</h5>
+          <h5>Password Generator</h5>
+          <h6>Strength : {passwordStrengthLabel}</h6>
+          <h6>Entropy : {passwordEntropy + " bits"}</h6>
 
           <ul>
             <li id="letterCase" className={checkCase ? "valid" : "invalid"}>

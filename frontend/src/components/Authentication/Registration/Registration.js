@@ -20,7 +20,7 @@ const Registration = (props) => {
     passwordMatch: false,
   });
 
-  const onChangePRN = (e) => {
+  const onChangePRN = async (e) => {
     if (e.target.value.length === 11) {
       var regex = /^[SAE][0-9]{10}?$/;
       if (!regex.test(e.target.value)) {
@@ -55,8 +55,7 @@ const Registration = (props) => {
         [e.target.name]: e.target.value,
         validity: false,
       });
-    }
-    else {
+    } else {
       setPersonalEmailID({
         [e.target.name]: e.target.value,
         validity: true,
@@ -64,41 +63,58 @@ const Registration = (props) => {
     }
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (password.validity && password.passwordMatch && PRN.validity && personalEmailID.validity) {
-      const userType =
-        PRN.PRN.slice(0, 1) === "A"
-          ? "admin"
-          : PRN.PRN.slice(0, 1) === "S"
-          ? "student"
+    if (
+      password.validity &&
+      password.passwordMatch &&
+      PRN.validity &&
+      personalEmailID.validity
+    ) {
+      try {
+        const userType =
+          PRN.PRN.slice(0, 1) === "A"
+            ? "admin"
+            : PRN.PRN.slice(0, 1) === "S"
+            ? "student"
             : "faculty";
-      const userID = PRN.PRN.slice(1);
-      axios
-        .get("http://localhost:5000/student/studentByPRN/" + userID)
-        .then((response) => {
-          console.log(response.data);
-          const user = {
-            userID,
-            userType,
-            personalEmailID: personalEmailID.personalEmailID,
-            collegeEmailID,
-            password: password.password,
-          };
-          console.table(user);
-          axios
-            .post("http://localhost:5000/authentication/register", user)
-            .then((res) => console.log(res.data))
-            .catch((error) => {
-              console.log(error);
-            });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    else {
+        const userID = PRN.PRN.slice(1);
+        const checkAdmit = await axios.get(
+          `${process.env.REACT_APP_BACKEND_BASE_URL}student/checkStudentByPRN/${userID}`
+        );
+        if (!checkAdmit) {
+          console.log("First admit the user then Register");
+          return;
+        }
+
+        const user = {
+          userID,
+          userType,
+          personalEmailID: personalEmailID.personalEmailID,
+          collegeEmailID,
+          password: password.password,
+        };
+        const registerUser = await axios.post(
+          `http://localhost:5000/authentication/register`,
+          user
+        );
+        console.log("registerUser", registerUser);
+      } catch (error) {
+        let message = "";
+        if (error.response.data === "Error: No Student found") {
+          console.log(error.response.data);
+          message = "First admit the user then Register";
+          setError(message);
+        }
+        if (error.response.data === "Error: Duplicate Entry Error") {
+          console.log(error.response.data);
+          message = "User is already Registered";
+          setError(message);
+        }
+        document.getElementById("Register").disabled = true;
+      }
+    } else {
       console.log("error in validation");
       console.log(
         "sup",
@@ -108,15 +124,24 @@ const Registration = (props) => {
         personalEmailID.validity
       );
     }
-}
+  };
+
+  const [error, setError] = useState(null);
+  const errorDiv = error ? (
+    <div className="error">
+      <i className="material-icons error-icon">{error}</i>
+    </div>
+  ) : (
+    ""
+  );
 
   return (
     <div className="main_container_registration">
       <div className="form_area_registration">
         <h3>Registration</h3>
+        {errorDiv}
         <form onSubmit={onSubmit}>
           <div className="flex_container_registration">
-            {JSON.stringify(PRN)}
             <div className="input_container">
               <label className="label filled" htmlFor="PRN">
                 PRN
@@ -152,7 +177,6 @@ const Registration = (props) => {
                 //   onChange={}
               />
             </div>
-            {JSON.stringify(personalEmailID)}
             <div className="input_container">
               <label className="label filled" htmlFor="personalEmailID">
                 Personal Email ID
@@ -169,13 +193,13 @@ const Registration = (props) => {
                 onChange={onChangePersonalEmailID}
               />
             </div>
-            {JSON.stringify(password)}
             <PasswordValidation password={password} setPassword={setPassword} />
 
             <input
+              id="Register"
               type="submit"
               className="btn btn-dark btn-lg"
-              value="Register"
+              value={error ? "Refresh and Try again" : "Register"}
             />
           </div>
         </form>

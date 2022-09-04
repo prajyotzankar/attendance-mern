@@ -1,4 +1,3 @@
-
 const RandomPasswordGenerator = () => {
   const keys = {
     upperCase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -23,12 +22,18 @@ const RandomPasswordGenerator = () => {
   ];
 
   let password = "";
-  while (15 > password.length) {
-    let keyToAdd = getKey[Math.floor(Math.random() * getKey.length)];
-    password += keyToAdd();
+  let reqPasswordLength = 15;
+  const regex = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9])(?=\S*?[!@#$%^&*()_+<>?]).{10,20})\S$/;
+  while (!regex.test(password)) {
+    password = "";
+    reqPasswordLength = Math.floor(Math.random() * 6 + 15);
+    while (reqPasswordLength > password.length) {
+      let keyToAdd = getKey[Math.floor(Math.random() * getKey.length)];
+      password += keyToAdd();
+    }
   }
-    
-    return password;
+
+  return password;
 };
 
 export default RandomPasswordGenerator;
