@@ -31,7 +31,23 @@ router.route("/admit").post((req, res) => {
 
 router.route("/studentByPRN/:prn").get((req, res) => {
   Student.findOne({ prn: req.params.prn })
-    .then((student) => res.json(student))
+    .then((student) => {
+      if (!student) {
+        return res.status(400).json("Error: No Student found");
+      }
+      return res.json(student);
+    })
+    .catch((error) => res.status(400).json("Error: " + error));
+});
+
+router.route("/checkStudentByPRN/:prn").get((req, res) => {
+  Student.findOne({ prn: req.params.prn }, {_id: 1, prn: 1})
+    .then((student) => {
+      if (!student) {
+        return res.status(400).json("Error: No Student found");
+      }
+      return res.json(student);
+    })
     .catch((error) => res.status(400).json("Error: " + error));
 });
 

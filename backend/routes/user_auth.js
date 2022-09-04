@@ -30,10 +30,11 @@ router.route("/register").post(async (req, res) => {
     return res.status(200).json(SendToken(newUser, res));
 
   } catch (error) {
+    let message = "Error: " + error;
     if (error.code === 11000)
-      return res.status(400).json("Error: duplicate key error");
+      message = "Error: Duplicate Entry Error";
       
-    return res.status(400).json("Error: " + error);
+    return res.status(400).json(message);
   }
   
 });
