@@ -16,6 +16,9 @@ permission level of account used.
 ```terminal
 $ git clone https://github.com/prajyotzankar/attendance-mern.git
 ```
+## Project Status
+> Underdevelopment 
+
 
 ## Project Structure
 
@@ -64,7 +67,7 @@ $ npm run build // this will compile the react code using webpack and generate a
 $ npm run start // this will run the files in docs, this behavior is exactly the same how gh-pages will run your static site
 ```
 
-## Server-side usage(PORT: 8000)
+## Server-side usage(PORT: 5000)
 
 ### Prepare your secret
 You need to add follow variables in .env:
@@ -88,7 +91,7 @@ You need to add follow variables in .env:
 ```terminal
 $ cd server   // go to server folder
 $ npm i       // npm install packages
-$ npm run dev // run it locally
+$ npm server // run it locally
 $ npm run build // this will build the server code to es5 js codes and generate a dist file
 ```
 
@@ -120,7 +123,7 @@ Email Me: zankarprajyotsushil@gmail.com (welcome, say hi)
 
 ## Author
 
-[Prajyot Zankar]
+[Prajyot Zankar](https://www.linkedin.com/in/prajyotzankar/)
 
 ### License
 
