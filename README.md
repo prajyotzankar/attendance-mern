@@ -127,4 +127,4 @@ Email Me: zankarprajyotsushil@gmail.com (welcome, say hi)
 
 ### License
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/prajyotzankar/attendance-mern/blob/master/LICENSE.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/prajyotzankar/attendance-mern/blob/master/LICENSE.md)
