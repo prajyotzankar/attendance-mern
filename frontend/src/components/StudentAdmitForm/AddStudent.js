@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import StateAddress from "./Address/StateAddress";
 import DistrictAddress from "./Address/DistrictAddress";
@@ -49,6 +49,32 @@ const AddStudent = (props) => {
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const authHeader = localStorage.getItem("AttendanceAppAuth");
+      console.log("sp1");
+      axios
+        .post("http://localhost:5000/authentication/authenticate", {
+          headers: {
+            Authorization: `Bearer ${authHeader}`,
+          },
+        })
+        .then((response) => {
+          const authorizedUserTypes = ["faculty", "admin"];
+          console.log(response, response.data.authentication);
+          const userType = response.data.authentication;
+          if (!authorizedUserTypes.includes(userType)) {
+            console.log("sp1");
+            document.location.href = "http://localhost:3000/login";
+          }
+        })
+        .catch((error) => {
+          console.log("server Error:  ", error);
+        });
+    };
+    checkAuth();
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();

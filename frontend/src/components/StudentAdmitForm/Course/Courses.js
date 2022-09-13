@@ -5,20 +5,26 @@ const Courses = (props) => {
   const [courseOptions, setCourseOptions] = useState({});
 
   useEffect(() => {
-      const getCourseOptions = async () => {
-          if (typeof props.course.school !== "undefined") { 
-              if (props.course.school.length > 0) { 
-                  await axios
-                    .get(
-                      "http://localhost:5000/schoolsCourses/courses/" +
-                        props.course.school
-                    )
-                    .then((response) => {
-                      setCourseOptions(response.data);
-                    })
-                    .catch((error) => console.log(error));
+    const getCourseOptions = async () => {
+      if (typeof props.course.school !== "undefined") {
+        if (props.course.school.length > 0) {
+          const authHeader = localStorage.getItem("AttendanceAppAuth");
+
+          await axios
+            .get(
+              `http://localhost:5000/schoolsCourses/courses/${props.course.school}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${authHeader}`,
+                },
               }
-          }
+            )
+            .then((response) => {
+              setCourseOptions(response.data);
+            })
+            .catch((error) => console.log(error));
+        }
+      }
     };
     getCourseOptions();
   }, [props.course.school]);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./RegistrationStyle.css";
 import PasswordValidation from "./PasswordValidation";
+import Modal from "./modal";
 
 const Registration = (props) => {
   const [PRN, setPRN] = useState({
@@ -19,6 +20,7 @@ const Registration = (props) => {
     confirmPassword: "",
     passwordMatch: false,
   });
+  const [userReg, setUserReg] = useState(false);
 
   const onChangePRN = async (e) => {
     if (e.target.value.length === 11) {
@@ -29,6 +31,10 @@ const Registration = (props) => {
           [e.target.name]: e.target.value,
           validity: false,
         });
+        e.target.setCustomValidity(
+          "PRN is 10 digit number with leading letter"
+        );
+        e.target.reportValidity();
       } else {
         var collegeEmail =
           e.target.value.replace(/[^0-9]/g, "") + "@college.edu.in";
@@ -38,6 +44,7 @@ const Registration = (props) => {
           [e.target.name]: e.target.value,
           validity: true,
         });
+        e.target.setCustomValidity("");
       }
     } else {
       setPRN({
@@ -55,11 +62,14 @@ const Registration = (props) => {
         [e.target.name]: e.target.value,
         validity: false,
       });
+      e.target.setCustomValidity("Input proper Email ID");
+      e.target.reportValidity();
     } else {
       setPersonalEmailID({
         [e.target.name]: e.target.value,
         validity: true,
       });
+      e.target.setCustomValidity("");
     }
   };
 
@@ -100,18 +110,10 @@ const Registration = (props) => {
           user
         );
         console.log("registerUser", registerUser);
+        if (registerUser) setUserReg(true);
       } catch (error) {
-        let message = "";
-        if (error.response.data === "Error: No Student found") {
-          console.log(error.response.data);
-          message = "First admit the user then Register";
-          setError(message);
-        }
-        if (error.response.data === "Error: Duplicate Entry Error") {
-          console.log(error.response.data);
-          message = "User is already Registered";
-          setError(message);
-        }
+        console.log(error.response.data);
+        setError(error.response.data);
         document.getElementById("Register").disabled = true;
       }
     } else {
@@ -123,23 +125,40 @@ const Registration = (props) => {
         PRN.validity,
         personalEmailID.validity
       );
+      var message = "Warning: Please input Proper Values";
+      if (!PRN.validity)
+        message = "Warning: PRN is 10 digit number with leading letter";
+      else if (!personalEmailID.validity)
+        message = "Error: Input proper Email ID";
+      else if (!password.validity) message = "Error: Password Invalid";
+      else if (!password.passwordMatch)
+        message = "Error: Password do not Match";
+
+      setValidityError(message);
     }
   };
 
   const [error, setError] = useState(null);
-  const errorDiv = error ? (
+  const [validityError, setValidityError] = useState(null);
+  const ShowValidityError = validityError && (
     <div className="error">
-      <i className="material-icons error-icon">{error}</i>
+      <i className="material-icons error-icon">{validityError}</i>
     </div>
-  ) : (
-    ""
   );
 
   return (
     <div className="main_container_registration">
       <div className="form_area_registration">
         <h3>Registration</h3>
-        {errorDiv}
+        {/* <ControlledPopup error={error} setError={setError} /> */}
+        {ShowValidityError}
+        {userReg ? (
+          <Modal error={"Success"} />
+        ) : error ? (
+          <Modal error={error} />
+        ) : (
+          ""
+        )}
         <form onSubmit={onSubmit}>
           <div className="flex_container_registration">
             <div className="input_container">

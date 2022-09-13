@@ -4,19 +4,7 @@ const sendEmail = require("../middleware/sendEmail");
 const crypto = require("crypto")
 
 router.route("/register").post(async (req, res) => {
-  // const newUser = new User_auth({
-  //   userType: req.body.userType,
-  //   userID: req.body.userID,
-  //   collegeEmailID: req.body.collegeEmailID,
-  //   personalEmailID: req.body.personalEmailID,
-  //   password: req.body.password,
-  // });
-
-  // newUser
-  //   .save()
-  //   .then(SendToken(newUser, res))
-  //   .catch((error) => { return res.status(400).json("Error: " + error) });
-  
+   
   try {
     const newUser = new User_auth({
       userType: req.body.userType,
@@ -27,13 +15,12 @@ router.route("/register").post(async (req, res) => {
     });
 
     await newUser.save();
-    return res.status(200).json(SendToken(newUser, res));
+    return SendToken(newUser, res);
 
   } catch (error) {
     let message = "Error: " + error;
     if (error.code === 11000)
       message = "Error: Duplicate Entry Error";
-      
     return res.status(400).json(message);
   }
   
@@ -221,9 +208,18 @@ router.route("/changepassword").post(async (req, res) => {
   
 })
 
+router.route("/authenticate").post(async (req, res) => {
+  const { auth, userType } = await checkAuth(req);
+  if (auth === "verified") {
+    return res.status(200).json({ authentication: userType });
+  }
+  return res.status(403).json({ authentication: "Access Denied" });
+
+})
+
 const SendToken = (user, res) => {
   const token = user.getSignedToken();
-  return res.json({token});
+  return res.status(200).json({ token });
 }
 
 module.exports = router;

@@ -26,14 +26,16 @@ const ListStudentInfo = (props) => {
     const getStudents = async () => {
       if (typeof course.year !== "undefined") {
         if (course.year.length > 0) {
+          const authHeader = localStorage.getItem("AttendanceAppAuth");
+
           await axios
             .get(
-              "http://localhost:5000/student/filterByCourse/" +
-                course.school +
-                "/" +
-                course.courseName +
-                "/" +
-                course.year
+              `http://localhost:5000/student/filterByCourse/${course.school}/${course.courseName}/${course.year}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${authHeader}`,
+                },
+              }
             )
             .then((response) => {
               setStudents(response.data);
@@ -56,17 +58,16 @@ const ListStudentInfo = (props) => {
         </div>
       </div>
       <div className="table-area">
-
-      {(() => {
-        if (typeof students[0] !== "undefined") {
-          if (students[0].prn.length > 0) {
-            return <StudentTable students={students} />;
+        {(() => {
+          if (typeof students[0] !== "undefined") {
+            if (students[0].prn.length > 0) {
+              return <StudentTable students={students} />;
+            }
+          } else {
+            if (course.year.length > 0)
+              return <h3>No Student Under this Selections</h3>;
           }
-        } else {
-          if (course.year.length > 0)
-          return <h3>No Student Under this Selections</h3>;
-        }
-      })()}
+        })()}
       </div>
     </div>
   );

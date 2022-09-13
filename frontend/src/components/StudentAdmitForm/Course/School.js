@@ -6,8 +6,14 @@ const School = (props) => {
 
   useEffect(() => {
     const getSchoolOptions = async () => {
+      const authHeader = localStorage.getItem("AttendanceAppAuth");
+
       await axios
-        .get("http://localhost:5000/schoolsCourses/schools")
+        .get("http://localhost:5000/schoolsCourses/schools", {
+          headers: {
+            Authorization: `Bearer ${authHeader}`,
+          },
+        })
         .then((response) => {
           setSchoolOptions(response.data);
         })

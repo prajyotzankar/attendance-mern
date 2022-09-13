@@ -5,22 +5,26 @@ const Years = (props) => {
   const [duration, setDuration] = useState("");
 
   useEffect(() => {
-      const getDuration = async () => {
-          if (typeof props.course.courseName !== "undefined") {
-              if (props.course.courseName.length > 0) {
-                await axios
-                  .get(
-                    "http://localhost:5000/schoolsCourses/duration/" +
-                      props.course.school +
-                      "/" +
-                      props.course.courseName
-                  )
-                  .then((response) => {
-                    setDuration(response.data[0]["Duration"]);
-                  })
-                  .catch((error) => console.log(error));
-              } 
+    const getDuration = async () => {
+      if (typeof props.course.courseName !== "undefined") {
+        if (props.course.courseName.length > 0) {
+          const authHeader = localStorage.getItem("AttendanceAppAuth");
+
+          await axios
+            .get(
+              `http://localhost:5000/schoolsCourses/duration/${props.course.school}/${props.course.courseName}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${authHeader}`,
+                },
+              }
+            )
+            .then((response) => {
+              setDuration(response.data[0]["Duration"]);
+            })
+            .catch((error) => console.log(error));
         }
+      }
     };
     getDuration();
   }, [props.course.courseName]);

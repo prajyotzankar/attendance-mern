@@ -1,0 +1,30 @@
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease-in-out;
+  background: #14181c;
+  box-shadow: 7px 7px 10px 10px #030405;
+  padding: 40px 80px 30px 80px;
+  z-index: 1000;
+  text-align: center;
+  color: #3CBC3C;
+  border-radius: 10px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #0A0C0E;
+  z-index: 1000;
+  opacity: 0.9;
+}
+
+.popupButton{
+    margin: 20px;
+}
+

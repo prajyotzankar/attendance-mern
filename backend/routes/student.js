@@ -29,15 +29,27 @@ router.route("/admit").post((req, res) => {
     .catch((error) => res.status(400).json("Error: " + error));
 });
 
-router.route("/studentByPRN/:prn").get((req, res) => {
-  Student.findOne({ prn: req.params.prn })
-    .then((student) => {
-      if (!student) {
-        return res.status(400).json("Error: No Student found");
-      }
-      return res.json(student);
-    })
-    .catch((error) => res.status(400).json("Error: " + error));
+router.route("/studentByPRN/:prn").get(async (req, res) => {
+  const authorizedUserTypes = ["faculty", "admin", "student"];
+  const { auth, userType, userID } = await checkAuth(req);
+  if (auth === "verified" && authorizedUserTypes.includes(userType)) {
+    // Using =! instead of ==! as typeof userID is number and 
+    // typeof req.params.prn is string
+    if (userType === "student" && req.params.prn != userID)
+      return res.status(400).json("Invalid Credentials");
+
+    Student.findOne({ prn: req.params.prn })
+      .then((student) => {
+        if (!student) {
+          return res.status(400).json("Error: No Student found");
+        }
+        return res.json(student);
+      })
+      .catch((error) => res.status(400).json("Error: " + error));
+  } else {
+    res.status(403).json("Access Denied");
+  }
+  
 });
 
 router.route("/checkStudentByPRN/:prn").get((req, res) => {

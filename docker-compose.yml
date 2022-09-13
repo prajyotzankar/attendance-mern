@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  frontend-app:
+    image: prajyotzankar/attendance-mern-frontend  
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - attendnace_app
+  backend-app:
+    image: prajyotzankar/attendance-mern-backend
+    ports:
+      - "5000:5000"
+    networks:
+      - attendnace_app
+      
+networks:
+  attendnace_app:
+   driver: bridge
