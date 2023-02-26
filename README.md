@@ -67,6 +67,10 @@ $ npm run build // this will compile the react code using webpack and generate a
 $ npm run start // this will run the files in docs, this behavior is exactly the same how gh-pages will run your static site
 ```
 
+# Frontend Demo (Registration Page)
+https://user-images.githubusercontent.com/22301528/221417826-f788d5c0-486b-42df-897a-93c90c059372.mp4
+
+
 ## Server-side usage(PORT: 5000)
 
 ### Prepare your secret
@@ -109,8 +113,10 @@ $ npm run build // this will build the server code to es5 js codes and generate 
 | web-vitals: ^2.1.4            | nodemailer: ^6.7.8    |
 
 # Screenshots of this project
-
-
+<p align="left">
+<img src="https://user-images.githubusercontent.com/22301528/221417099-d030c192-3f28-4f0f-888d-1034d994db50.jpg"  width="450" height="300">
+<img src="https://user-images.githubusercontent.com/22301528/221417105-7879dc78-5d6e-4605-9f46-e6b3ce88eaa8.jpg"  width="550" height="300">
+</p>
 ## Standard
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
